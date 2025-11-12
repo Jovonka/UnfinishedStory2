@@ -34,18 +34,17 @@
 
   .parallax-bg {
     left: 25%;
-    top:20px;
+    top: 20px;
     position: relative;
     width: 600px;
     height: 300px;
     margin: 0 auto;
     overflow: hidden;
     z-index: 49;
-    opacity: 0;
-    transition: opacity 1s ease;
+    opacity: 1; /* visible immediately */
+    transition: none;
     background-color: #fff;
   }
-  .parallax-bg.loaded { opacity: 1; }
 
   .layer {
     position: absolute;
@@ -56,16 +55,9 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    animation-timing-function: ease-in-out;
   }
-  .layer.bg { background-image: url("bg.png"); z-index: 1; animation: bgMove 20s linear infinite alternate; }
-  .layer.mid { background-image: url("mid.png"); z-index: 2; animation: midMove 20s linear infinite alternate; }
-  .layer.fg { background-image: url("front.png"); z-index: 3; animation: fgMove 20s linear infinite alternate; }
-
-  @keyframes bgMove { 0%,100%{transform:translate3d(-2%,-1%,0) scale(1.05);}50%{transform:translate3d(2%,1%,0) scale(1.05);} }
-  @keyframes midMove { 0%,100%{transform:translate3d(-1%,0%,0) scale(1.05);}50%{transform:translate3d(2%,2%,0) scale(1.05);} }
-  @keyframes fgMove { 0%,100%{transform:translate3d(-2%,0%,0) scale(1.1);}50%{transform:translate3d(2%,3%,0) scale(1.1);} }
-
+  .layer.bg { background-image: url("full1.png"); z-index: 1; }
+ 
   .video-column {
     position: fixed;
     top: 0;
@@ -126,7 +118,6 @@
     transform: translateY(0) skewY(0deg) scale(1);
   }
 
-  /* Bouncing dot under first paragraph */
   .scroll-dot {
     position: absolute;
     bottom: -100px;
@@ -135,7 +126,6 @@
     width: 1px;
     height: 30px;
     background: #000;
-
     animation: bounce 1.5s ease-in-out infinite;
   }
 
@@ -171,8 +161,7 @@
   <div class="top-gray-container">
     <div class="parallax-bg" id="parallax">
       <div class="layer bg"></div>
-      <div class="layer mid"></div>
-      <div class="layer fg"></div>
+     
     </div>
   </div>
 
@@ -190,15 +179,15 @@
       <p>Even though I couldn’t see it, I felt their pity. But this is just the way my life is. Nothing will ever change… or will it?</p>
       <p>Then I heard voices: “Who sinned? This man or his parents?” A different voice answered:</p>
       <p>“Neither this man nor his parents sinned, but this happened so that the works of God might be displayed in him…I am the light of the world.”</p>
-      <a href="page3.html" class="continue-btn">Continue</a>
-    </div>
+      <div style="display: flex; gap: 20px; justify-content: center; margin-top: 100px;">
+        <a href="index.html" class="continue-btn" style="background: #555;">Back</a>
+        <a href="page3.html" class="continue-btn">Continue</a>
+      </div>
+        </div>
   </div>
 
 <script>
 const textParagraphs = document.querySelectorAll(".text-column p");
-const parallax = document.getElementById("parallax");
-
-window.addEventListener("load", () => { parallax.classList.add("loaded"); });
 
 // IntersectionObserver for text fade-in
 const observer = new IntersectionObserver((entries) => {
@@ -209,7 +198,7 @@ const observer = new IntersectionObserver((entries) => {
 
 textParagraphs.forEach(p => observer.observe(p));
 
-// Scroll-based geometric movement
+// Scroll-based geometric movement for text
 window.addEventListener("scroll", () => {
   const windowHeight = window.innerHeight;
 
