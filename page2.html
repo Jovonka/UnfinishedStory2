@@ -42,7 +42,7 @@
     overflow: hidden;
     z-index: 49;
     opacity: 0;
-    transition: opacity 2s ease;
+    transition: opacity 1s ease;
     background-color: #fff;
   }
   .parallax-bg.loaded { opacity: 1; }
@@ -72,7 +72,7 @@
     left: 0;
     width: 50%;
     min-height: 100vh;
-    background: rgba(138, 104, 67, 1);
+    background: rgba(63, 64, 74, 1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,6 +84,7 @@
     height: auto;
     min-height: 100vh;
     object-fit: contain;
+    controls: true;
   }
 
   .layout {
@@ -108,7 +109,6 @@
     box-sizing: border-box;
   }
 
-  /* Updated modern geometric scroll animation */
   .text-column p {
     font-size: 1.3rem;
     line-height: 1.7;
@@ -119,10 +119,29 @@
     color: rgb(0, 0, 0);
     margin: 80px 0;
     width: 60%;
+    position: relative;
   }
   .text-column p.visible {
     opacity: 1;
     transform: translateY(0) skewY(0deg) scale(1);
+  }
+
+  /* Bouncing dot under first paragraph */
+  .scroll-dot {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-80%);
+    width: 1px;
+    height: 30px;
+    background: #000;
+
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-15px); }
   }
 
   .continue-btn {
@@ -145,7 +164,6 @@
     .top-gray-container { width: 100%; height: 0px; position: relative; visibility: hidden; }
     .text-column { width: 100%; padding: 100px 20px; text-align: center; }
     .text-column p { font-size: 1.2rem; margin: 100px 0; }
-    .progress-container { display: none; }
   }
 </style>
 </head>
@@ -159,17 +177,20 @@
   </div>
 
   <div class="video-column">
-    <video src="v0.mp4" autoplay></video>
+    <video src="v0.mp4" controls></video>
   </div>
 
   <div class="layout" id="layout">
     <div class="text-column">
-      <p>The sun burnt hot on my face. I called out to others. I heard them walk by.</p>
+      <p id="p1">
+        The sun burnt hot on my face. I called out to others. I heard them walk by.
+        <span class="scroll-dot"></span>
+      </p>
       <p>But I couldn’t see them. Because I was born blind.</p>
       <p>Even though I couldn’t see it, I felt their pity. But this is just the way my life is. Nothing will ever change… or will it?</p>
       <p>Then I heard voices: “Who sinned? This man or his parents?” A different voice answered:</p>
       <p>“Neither this man nor his parents sinned, but this happened so that the works of God might be displayed in him…I am the light of the world.”</p>
-      <a href="v2.html" class="continue-btn">Continue</a>
+      <a href="page3.html" class="continue-btn">Continue</a>
     </div>
   </div>
 
@@ -190,13 +211,20 @@ textParagraphs.forEach(p => observer.observe(p));
 
 // Scroll-based geometric movement
 window.addEventListener("scroll", () => {
-  textParagraphs.forEach(p => {
+  const windowHeight = window.innerHeight;
+
+  textParagraphs.forEach((p) => {
     const rect = p.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
     const offset = (windowHeight - rect.top) / windowHeight;
+
     if (offset > 0 && offset < 1) {
-      p.style.transform = `translateY(${50 * (1 - offset)}px) skewY(${5 * (1 - offset)}deg) scale(${0.95 + 0.05 * offset})`;
-      p.style.opacity = offset;
+      const translateY = 50 * (1 - offset);
+      const skewY = 5 * (1 - offset);
+      const scale = 0.95 + 0.05 * offset;
+      const opacity = offset;
+
+      p.style.transform = `translateY(${translateY}px) skewY(${skewY}deg) scale(${scale})`;
+      p.style.opacity = opacity;
     }
   });
 });

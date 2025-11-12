@@ -5,242 +5,258 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Jesus Heals the Blind Man</title>
 <style>
-  :root {
-    --duration: 1.2s;
-    --timing-function: ease-in-out;
-  }
-  
   html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow-x: hidden;
     font-family: "Poppins", sans-serif;
     background-color: #ffffff;
+    overflow-x: hidden;
   }
-  
+  body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  body::-webkit-scrollbar { display: none; }
 
-  
-  /* ✅ Fullscreen parallax background */
-  .parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  .top-gray-container {
+    background-color: #ffffff;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
     overflow: hidden;
-    z-index: 0;
+  }
+
+  .parallax-bg {
+    right: 25%;
+    top:20px;
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    z-index: 49;
     opacity: 0;
-    transition: opacity 2s ease;
+    transition: opacity 1s ease;
+    background-color: #fff;
   }
-  .parallax-bg.loaded {
-    opacity: 1;
-  }
-  
+  .parallax-bg.loaded { opacity: 1; }
+
   .layer {
     position: absolute;
     top: 0;
     left: 0;
-    width: 110%;
-    height: 110%;
+    width: 100%;
+    height: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     animation-timing-function: ease-in-out;
-    will-change: transform;
   }
-  
-  /* ✅ Layer movement */
-  .layer.bg {
-    background-image: url("bg1.png");
-    z-index: 1;
-    animation: bgMove 18s linear infinite alternate;
-  }
-  .layer.mid {
-    background-image: url("mid1.png");
-    z-index: 2;
-    animation: midMove 18s linear infinite alternate;
-  }
-  .layer.fg {
-    background-image: url("front1.png");
-    z-index: 3;
-    animation: fgMove 18s linear infinite alternate;
-  }
-  
-  @keyframes bgMove {
-    0% { transform: translate3d(-2%, -1%, 0) scale(1.05); }
-    50% { transform: translate3d(2%, 1%, 0) scale(1.05); }
-    100% { transform: translate3d(-2%, -1%, 0) scale(1.05); }
-  }
-  @keyframes midMove {
-    0% { transform: translate3d(-1%, 0%, 0) scale(1.05); }
-    50% { transform: translate3d(2%, 2%, 0) scale(1.05); }
-    100% { transform: translate3d(-1%, 0%, 0) scale(1.05); }
-  }
-  @keyframes fgMove {
-    0% { transform: translate3d(-2%, 0%, 0) scale(1.1); }
-    50% { transform: translate3d(2%, 3%, 0) scale(1.1); }
-    100% { transform: translate3d(-2%, 0%, 0) scale(1.1); }
-  }
-  
-  /* ✅ Wrapper for text */
-  .wrapper {
-    position: relative;
-    min-height: 350vh;
-    width: 100%;
+  .layer.bg { background-image: url("bg1.png"); z-index: 1; animation: bgMove 20s linear infinite alternate; }
+  .layer.mid { background-image: url("mid1.png"); z-index: 2; animation: midMove 20s linear infinite alternate; }
+  .layer.fg { background-image: url("front1.png"); z-index: 3; animation: fgMove 20s linear infinite alternate; }
+
+  @keyframes bgMove { 0%,100%{transform:translate3d(-2%,-1%,0) scale(1.05);}50%{transform:translate3d(2%,1%,0) scale(1.05);} }
+  @keyframes midMove { 0%,100%{transform:translate3d(-1%,0%,0) scale(1.05);}50%{transform:translate3d(2%,2%,0) scale(1.05);} }
+  @keyframes fgMove { 0%,100%{transform:translate3d(-2%,0%,0) scale(1.1);}50%{transform:translate3d(2%,3%,0) scale(1.1);} }
+
+  .video-column {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    min-height: 100vh;
+    background: rgba(195, 143, 85, 1);
     display: flex;
-    justify-content: flex-start; /* left side */
-  align-items: flex-start;     /* start from top-left */
-  
-    flex-direction: column;
-    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    overflow: hidden;
   }
-  
-  /* ✅ Text container fully right */
-  .text-container {
+  .video-column video {
+    width: 90%;
+    height: auto;
+    min-height: 100vh;
+    object-fit: contain;
+    controls: true;
+  }
+
+  .layout {
+    display: flex;
+    justify-content: flex-start;
+    min-height: 100vh;
     position: relative;
-    margin-right: 0;
-    padding: 200px 40px 200px 50px;
-    max-width: 550px;
-    color: #000;
-    text-align: left;
+    background: #ffffff;
+    z-index: 5;
   }
-  
-  /* ✅ Paragraphs */
-  .text-container p {
-    
-    font-size: 2rem;
-    line-height: 1.8;
-    margin: 250px 0;
+  .text-column {
+    position: relative;
+    width: 50%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 70px 30px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .text-column p {
+    font-size: 1.3rem;
+    line-height: 1.7;
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 1.2s ease-out;
-    background: rgb(255, 255, 255);
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(50px) skewY(5deg) scale(0.95);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    margin: 80px 0;
+    width: 60%;
+    position: relative;
   }
-  .text-container p.visible {
+  .text-column p.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) skewY(0deg) scale(1);
   }
-  
 
-
-  
+  .scroll-dot {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
   @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-15px); }
   }
-  
-  /* ✅ Continue button aligned right */
+
+  /* Scroll indicator on left side */
+  .scroll-indicator {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 200;
+  }
+  .scroll-indicator .circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: all 0.3s ease;
+  }
+  .scroll-indicator .circle.active {
+    background: #000;
+  }
+
   .continue-btn {
-  position: absolute;
-  background: rgb(255, 255, 255);
-  color: black;
-  font-size: 2.2rem;
-  padding: 14px 28px;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  text-align: center;
-  right: 40px; /* ✅ back to the right side */
-}
-.continue-btn:hover {
-  background: black;
-  color: white;
-}
-
-  
-  /* ✅ Responsive */
-  @media (max-width: 768px) {
-    .text-container {
-      padding: 100px 20px;
-      max-width: 90%;
-      text-align: right;
-    }
-    .text-container p {
-      font-size: 1.3rem;
-      margin: 150px 0;
-    }
-    .scroll-indicator {
-      right: 20px;
-    }
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    font-size: 1.8rem;
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-top: 100px;
+    transition: all 0.3s ease;
   }
-  </style>
+  .continue-btn:hover { background: rgb(83,83,83); color: #fff; }
+
+  @media (max-width: 768px) {
+    .video-column { position: static; width: 100%; height: auto; }
+    .video-column video { width: 100%; height: auto; min-height: 50vh; }
+    .layout { flex-direction: column; align-items: center; }
+    .top-gray-container { width: 100%; height: 0px; position: relative; visibility: hidden; }
+    .text-column { width: 100%; padding: 100px 20px; text-align: center; }
+    .text-column p { font-size: 1.2rem; margin: 100px 0; }
+    .scroll-indicator { display: none; }
+  }
+</style>
 </head>
-
 <body>
-
-
-  <!-- ✅ Fullscreen parallax -->
-  <div class="parallax-bg" id="parallax">
-    <div class="layer bg"></div>
-    <div class="layer mid"></div>
-    <div class="layer fg"></div>
-  </div>
-
-  <div class="wrapper">
-    <div class="text-container" id="textBox">
-      <p>Light? I had never seen light. I just felt it. How could someone be light?
-    </p>
-      <p>But then I felt something else. Something covering my eyes.
-    </p>
-      <p>Something warm. 
-    </p>
-      <p>Something dirty.
-    </p>
-      <p>Was that mud?
-    </p>
-    <p>The man, Jesus, told me to go wash in the pool of Siloam.
-
-    </p>
-      <!-- ✅ Continue Button -->
-      <a href="v3.html" class="continue-btn">Continue →</a>
+  <div class="top-gray-container">
+    <div class="parallax-bg" id="parallax">
+      <div class="layer bg"></div>
+      <div class="layer mid"></div>
+      <div class="layer fg"></div>
     </div>
   </div>
 
-  <!-- ✅ Scroll-down indicator -->
-  <div class="scroll-indicator" id="scrollIndicator">Scroll Down ↓</div>
+  <div class="layout" id="layout">
+    <div class="text-column">
+      <p id="p1">
+        The sun burnt hot on my face. I called out to others. I heard them walk by.
+        
+      </p>
+      <p>But I couldn’t see them. Because I was born blind.</p>
+      <p>Even though I couldn’t see it, I felt their pity. But this is just the way my life is. Nothing will ever change… or will it?</p>
+      <p>Then I heard voices: “Who sinned? This man or his parents?” A different voice answered:</p>
+      <p>“Neither this man nor his parents sinned, but this happened so that the works of God might be displayed in him…I am the light of the world.”</p>
+      <a href="page4.html" class="continue-btn">Continue</a>
+    </div>
+  </div>
 
+  <div class="video-column">
+    <video src="v2.mp4" controls></video>
+  </div>
+
+ 
 <script>
-const textParagraphs = document.querySelectorAll(".text-container p");
+const textParagraphs = document.querySelectorAll(".text-column p");
 const parallax = document.getElementById("parallax");
+const circles = document.querySelectorAll(".scroll-indicator .circle");
 
-const scrollIndicator = document.getElementById("scrollIndicator");
+window.addEventListener("load", () => { parallax.classList.add("loaded"); });
 
-// ✅ Fade in sequence
-window.addEventListener("load", () => {
-  setTimeout(() => overlay.classList.add("fade-out"), );
-  setTimeout(() => parallax.classList.add("loaded"), );
-});
+// IntersectionObserver for text fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add("visible");
+  });
+}, { threshold: 0.3 });
 
-// ✅ Fade in text on scroll
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("visible");
-    });
-  },
-  { threshold: 0.2 }
-);
+textParagraphs.forEach(p => observer.observe(p));
 
-textParagraphs.forEach((p) => observer.observe(p));
-
-
-
-// ✅ Fade out scroll indicator on scroll
-// ✅ Fade out scroll indicator on scroll
-let scrollIndicatorHidden = false;
+// Scroll-based geometric movement and scroll indicator update
 window.addEventListener("scroll", () => {
-  if (!scrollIndicatorHidden && window.scrollY > 20) {
-    scrollIndicator.classList.add("hide");
-    scrollIndicatorHidden = true;
-  }
+  const windowHeight = window.innerHeight;
+
+  textParagraphs.forEach((p, index) => {
+    const rect = p.getBoundingClientRect();
+    const offset = (windowHeight - rect.top) / windowHeight;
+
+    if (offset > 0 && offset < 1) {
+      const translateY = 50 * (1 - offset);
+      const skewY = 5 * (1 - offset);
+      const scale = 0.95 + 0.05 * offset;
+      const opacity = offset;
+
+      p.style.transform = `translateY(${translateY}px) skewY(${skewY}deg) scale(${scale})`;
+      p.style.opacity = opacity;
+    }
+
+    // Update scroll indicator
+    if (rect.top < windowHeight / 2 && rect.bottom > windowHeight / 2) {
+      circles.forEach(c => c.classList.remove("active"));
+      circles[index].classList.add("active");
+    }
+  });
 });
-
-
 </script>
 </body>
 </html>
