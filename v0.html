@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jesus Heals the Blind Man</title>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+}
+
+/* Fullscreen video */
+video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* Continue button (hidden at first) */
+#continue-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px; /* your right side */
+  background: white;
+  color: black;
+  font-size: 1.8rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  z-index: 3;
+}
+
+#continue-btn.show {
+  opacity: 1;
+}
+
+#continue-btn:hover {
+  background: black;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<video id="sceneVideo" controls playsinline>
+  <source src="v0.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<a id="continue-btn" href="page2.html">Continue →</a>
+
+<script>
+const video = document.getElementById("sceneVideo");
+const continueBtn = document.getElementById("continue-btn");
+let started = false;
+let buttonShown = false;
+
+// ✅ Start video at beginning only once on first click
+video.addEventListener("click", async () => {
+  if (!started) {
+    video.currentTime = 0;
+    started = true;
+  }
+  try {
+    await video.play();
+  } catch (err) {
+    console.warn("Playback interrupted:", err);
+  }
+});
+
+// ✅ Allow pause/resume normally — keeps current position
+
+// ✅ Show "Continue" button near end (3s before finish)
+video.addEventListener("timeupdate", () => {
+  if (!buttonShown && video.duration - video.currentTime <= 3) {
+    buttonShown = true;
+    continueBtn.classList.add("show");
+  }
+});
+</script>
+
+</body>
+</html>

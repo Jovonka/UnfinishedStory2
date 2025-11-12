@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jesus Heals the Blind Man</title>
+<style>
+  :root {
+    --duration: 1.2s;
+    --timing-function: ease-in-out;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: "Poppins", sans-serif;
+    background-color: #ffffff;
+  }
+  
+
+  
+  /* ✅ Fullscreen parallax background */
+  .parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 2s ease;
+  }
+  .parallax-bg.loaded {
+    opacity: 1;
+  }
+  
+  .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 110%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation-timing-function: ease-in-out;
+    will-change: transform;
+  }
+  
+  /* ✅ Layer movement */
+  .layer.bg {
+    background-image: url("bg1.png");
+    z-index: 1;
+    animation: bgMove 18s linear infinite alternate;
+  }
+  .layer.mid {
+    background-image: url("mid1.png");
+    z-index: 2;
+    animation: midMove 18s linear infinite alternate;
+  }
+  .layer.fg {
+    background-image: url("front1.png");
+    z-index: 3;
+    animation: fgMove 18s linear infinite alternate;
+  }
+  
+  @keyframes bgMove {
+    0% { transform: translate3d(-2%, -1%, 0) scale(1.05); }
+    50% { transform: translate3d(2%, 1%, 0) scale(1.05); }
+    100% { transform: translate3d(-2%, -1%, 0) scale(1.05); }
+  }
+  @keyframes midMove {
+    0% { transform: translate3d(-1%, 0%, 0) scale(1.05); }
+    50% { transform: translate3d(2%, 2%, 0) scale(1.05); }
+    100% { transform: translate3d(-1%, 0%, 0) scale(1.05); }
+  }
+  @keyframes fgMove {
+    0% { transform: translate3d(-2%, 0%, 0) scale(1.1); }
+    50% { transform: translate3d(2%, 3%, 0) scale(1.1); }
+    100% { transform: translate3d(-2%, 0%, 0) scale(1.1); }
+  }
+  
+  /* ✅ Wrapper for text */
+  .wrapper {
+    position: relative;
+    min-height: 350vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* left side */
+  align-items: flex-start;     /* start from top-left */
+  
+    flex-direction: column;
+    z-index: 2;
+  }
+  
+  /* ✅ Text container fully right */
+  .text-container {
+    position: relative;
+    margin-right: 0;
+    padding: 200px 40px 200px 50px;
+    max-width: 550px;
+    color: #000;
+    text-align: left;
+  }
+  
+  /* ✅ Paragraphs */
+  .text-container p {
+    
+    font-size: 2rem;
+    line-height: 1.8;
+    margin: 250px 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.2s ease-out;
+    background: rgb(255, 255, 255);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  .text-container p.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+
+
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  
+  /* ✅ Continue button aligned right */
+  .continue-btn {
+  position: absolute;
+  background: rgb(255, 255, 255);
+  color: black;
+  font-size: 2.2rem;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+  right: 40px; /* ✅ back to the right side */
+}
+.continue-btn:hover {
+  background: black;
+  color: white;
+}
+
+  
+  /* ✅ Responsive */
+  @media (max-width: 768px) {
+    .text-container {
+      padding: 100px 20px;
+      max-width: 90%;
+      text-align: right;
+    }
+    .text-container p {
+      font-size: 1.3rem;
+      margin: 150px 0;
+    }
+    .scroll-indicator {
+      right: 20px;
+    }
+  }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- ✅ Fullscreen parallax -->
+  <div class="parallax-bg" id="parallax">
+    <div class="layer bg"></div>
+    <div class="layer mid"></div>
+    <div class="layer fg"></div>
+  </div>
+
+  <div class="wrapper">
+    <div class="text-container" id="textBox">
+      <p>Light? I had never seen light. I just felt it. How could someone be light?
+    </p>
+      <p>But then I felt something else. Something covering my eyes.
+    </p>
+      <p>Something warm. 
+    </p>
+      <p>Something dirty.
+    </p>
+      <p>Was that mud?
+    </p>
+    <p>The man, Jesus, told me to go wash in the pool of Siloam.
+
+    </p>
+      <!-- ✅ Continue Button -->
+      <a href="v3.html" class="continue-btn">Continue →</a>
+    </div>
+  </div>
+
+  <!-- ✅ Scroll-down indicator -->
+  <div class="scroll-indicator" id="scrollIndicator">Scroll Down ↓</div>
+
+<script>
+const textParagraphs = document.querySelectorAll(".text-container p");
+const parallax = document.getElementById("parallax");
+
+const scrollIndicator = document.getElementById("scrollIndicator");
+
+// ✅ Fade in sequence
+window.addEventListener("load", () => {
+  setTimeout(() => overlay.classList.add("fade-out"), );
+  setTimeout(() => parallax.classList.add("loaded"), );
+});
+
+// ✅ Fade in text on scroll
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+  },
+  { threshold: 0.2 }
+);
+
+textParagraphs.forEach((p) => observer.observe(p));
+
+
+
+// ✅ Fade out scroll indicator on scroll
+// ✅ Fade out scroll indicator on scroll
+let scrollIndicatorHidden = false;
+window.addEventListener("scroll", () => {
+  if (!scrollIndicatorHidden && window.scrollY > 20) {
+    scrollIndicator.classList.add("hide");
+    scrollIndicatorHidden = true;
+  }
+});
+
+
+</script>
+</body>
+</html>
