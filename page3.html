@@ -3,13 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jesus Heals the Blind Man</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"><title>Jesus Heals the Blind Man</title>
 <style>
   html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: "Poppins", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
+ 
+ font-weight: 500;
+ font-style: normal;
     background-color: #ffffff;
     overflow-x: hidden;
   }
@@ -27,13 +32,13 @@
     align-items: center;
     flex-direction: column;
     color: #333;
-    font-weight: 500;
+  
     text-align: center;
     overflow: hidden;
   }
 
   .parallax-bg {
-    right: 25%;
+    left: 25%;
     top: 20px;
     position: relative;
     width: 600px;
@@ -41,8 +46,7 @@
     margin: 0 auto;
     overflow: hidden;
     z-index: 49;
-    opacity: 1; /* visible immediately */
-    transition: none;
+    opacity: 1;
     background-color: #fff;
   }
 
@@ -57,31 +61,32 @@
     background-repeat: no-repeat;
   }
   .layer.bg { background-image: url("full3.png"); z-index: 1; }
- 
+
   .video-column {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     width: 50%;
     min-height: 100vh;
-    background: rgba(195, 143, 85, 1);
+    background: rgba(63, 64, 74, 1);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 99;
     overflow: hidden;
+   
   }
   .video-column video {
     width: 90%;
     height: auto;
     min-height: 100vh;
     object-fit: contain;
-    controls: true;
+   
   }
 
   .layout {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     min-height: 100vh;
     position: relative;
     background: #ffffff;
@@ -106,53 +111,101 @@
     line-height: 1.7;
     opacity: 0;
     transform: translateY(50px) skewY(5deg) scale(0.95);
-    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s ease, box-shadow 0.5s ease;
     background: #ffffff;
     color: rgb(0, 0, 0);
     margin: 80px 0;
     width: 60%;
     position: relative;
-  }
-  .text-column p.visible {
+    border: 1px solid transparent;  /* light border initially invisible */
+ 
+    padding: 15px;
+}
+
+.text-column p.visible {
     opacity: 1;
     transform: translateY(0) skewY(0deg) scale(1);
-  }
+    border-color: #000000;            
+   
+}
+.text-column p::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -200px; /* adjust spacing */
+    transform: translateX(-50%);
+    width: 1px;
+    height: 200px; /* length of connecting line */
+    background-color: #000000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
 
+.text-column p::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -70px; /* middle of the line */
+    transform: translateX(-50%);
+    width: 5px;  /* size of the square */
+    height: 5px; /* size of the square */
+    background-color: #000000;
+    
+    border: 1px solid transparent;  /* light border initially invisible */
+   border-radius: 100px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.text-column p.visible::after,
+.text-column p.visible::before {
+    opacity: 1; /* show line and square when paragraph is visible */
+}
+
+/* Hide line and square for the last paragraph */
+.text-column p:last-child::after,
+.text-column p:last-child::before {
+    display: none;
+}
+
+/* Add line connecting to next paragraph */
+.text-column p::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -200px; /* adjust spacing */
+    transform: translateX(-50%);
+    width: 1px;
+    height: 200px; /* length of connecting line */
+    background-color: #000000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.text-column p.visible::after {
+    opacity: 1; /* line appears when paragraph is visible */
+}
+
+/* Hide line for the last paragraph */
+.text-column p:last-child::after {
+    display: none;
+}
+
+  
   .scroll-dot {
     position: absolute;
     bottom: -100px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 12px;
+    transform: translateX(-80%);
+    width: 1px;
+    height: 30px;
     background: #000;
-    border-radius: 50%;
     animation: bounce 1.5s ease-in-out infinite;
   }
+
   @keyframes bounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-15px); }
-  }
-
-  .scroll-indicator {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 200;
-  }
-  .scroll-indicator .circle {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ccc;
-    transition: all 0.3s ease;
-  }
-  .scroll-indicator .circle.active {
-    background: #000;
   }
 
   .continue-btn {
@@ -161,51 +214,165 @@
     color: #fff;
     font-size: 1.8rem;
     padding: 14px 28px;
-    border-radius: 10px;
+ 
     text-decoration: none;
     margin-top: 100px;
     transition: all 0.3s ease;
+    font-weight: 100;
   }
   .continue-btn:hover { background: rgb(83,83,83); color: #fff; }
 
+  /* ---------- Tablet (existing) ---------- */
   @media (max-width: 768px) {
     .video-column { position: static; width: 100%; height: auto; }
-    .video-column video { width: 100%; height: auto; min-height: 50vh; }
+    .video-column video { width: 100%; height: auto; min-height: 50vh; object-fit: contain; }
     .layout { flex-direction: column; align-items: center; }
-    .top-gray-container { width: 100%; height: 0px; position: relative; visibility: hidden; }
+    .top-gray-container { width: 100%; height: 0; position: relative; visibility: hidden; }
     .text-column { width: 100%; padding: 100px 20px; text-align: center; }
     .text-column p { font-size: 1.2rem; margin: 100px 0; }
-    .scroll-indicator { display: none; }
   }
+
+  /* ---------- Mobile (300px–500px) ---------- */
+  @media (max-width: 500px) {
+    
+    .mobile-arrow {
+    display: block;
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: -40%; /* space below video */
+    animation: arrowBounce 1.5s ease-in-out infinite;
+    opacity: 0.8;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    position: relative; /* position relative to video-column */
+    z-index: 2;
+  }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -3;
+    }
+
+    .video-column::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("full3.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      transition: transform 0.1s linear;
+    }
+
+    .video-column video {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: auto;
+      min-height: 60vh;
+      object-fit: cover;
+    }
+
+    .text-column {
+      width: 100%;
+      padding: 60px 15px;
+      background: #fff;
+      position: relative;
+      z-index: 5;
+    }
+
+    .text-column p {
+      font-size: 1rem;
+      margin: 60px 0;
+      width: 85%;
+      line-height: 1.5;
+    }
+
+    .continue-btn {
+      font-size: 1rem;
+      padding: 10px 18px;
+      
+      margin-top: 60px;
+    }
+  }
+
+  @media (max-width: 300px) {
+    .text-column p {
+      font-size: 0.9rem;
+      margin: 50px 0;
+      width: 90%;
+    }
+    .continue-btn {
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      margin-top: 50px;
+    }
+  }
+
+  /* Hide arrow for screens above 500px */
+  @media (min-width: 501px) {
+    .mobile-arrow { display: none; }
+  }
+
 </style>
 </head>
 <body>
   <div class="top-gray-container">
-    <div class="parallax-bg" id="parallax">
-      <div class="layer bg"></div>
     
+    <div class="parallax-bg" id="parallax"
+    >
+      
+      <div class="layer bg"></div>
+      
     </div>
   </div>
 
+  <div class="video-column">
+    <div class="video-bg"></div>
+    <video src="v2.mp4" muted playsinline controls></video>
+    
+  </div>
+  <div class="mobile-arrow">⌄</div>
   <div class="layout" id="layout">
     <div class="text-column">
-     
-      <p>Light? I had never seen light. I just felt it. How could someone be light?
+      <p id="p1">
+        Light? I had never seen light. I just felt it. How could someone be light?
       </p>
-      <p>But then I felt something else. Something covering my eyes.</p>
-      <p>Something warm. </p>
-      <p>Something dirty.</p>
-      <p>Was that mud?</p>
-      <p>The man, Jesus, told me to go wash in the pool of Siloam.</p>
+      <p>But then I felt something else. Something covering my eyes.
+
+      </p>
+      <p>Something warm. 
+
+      </p>
+      <p>Something dirty.
+
+      </p>
+      <p>Was that mud?
+
+      </p>
+      <p>The man, Jesus, told me to go wash in the pool of Siloam.
+
+
+      </p>
       <div style="display: flex; gap: 20px; justify-content: center; margin-top: 100px;">
-        <a href="page2.html" class="continue-btn" style="background: #555;">Back</a>
+        <a href="page2.html" class="continue-btn" style="background: rgba(63, 64, 74, 1);">Back</a>
         <a href="page4.html" class="continue-btn">Continue</a>
       </div>
-         </div>
-  </div>
-
-  <div class="video-column">
-    <video src="v2.mp4" controls></video>
+    </div>
   </div>
 
 <script>
@@ -220,7 +387,7 @@ const observer = new IntersectionObserver((entries) => {
 
 textParagraphs.forEach(p => observer.observe(p));
 
-// Scroll-based geometric movement
+// Scroll-based geometric movement for text
 window.addEventListener("scroll", () => {
   const windowHeight = window.innerHeight;
 
